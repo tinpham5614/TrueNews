@@ -28,12 +28,11 @@ function App() {
           <li>
             <Link to="/about">About</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
         </ul>
         <div className="relative">
-          {isAuthenticated && (
+          {!isAuthenticated ? (
+            <Link to="/login">Login</Link>
+          ) : (
             <button
               onClick={toggleDropdown}
               className="focus:outline-none text-white"

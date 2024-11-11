@@ -29,9 +29,14 @@ const Profile = () => {
               <strong>Username:</strong> {userData.username}
             </p>
             <p>
+              <strong>First Name:</strong> {userData.first_name}
+            </p>
+            <p>
+              <strong>Last Name:</strong> {userData.last_name}
+            </p>
+            <p>
               <strong>Email:</strong> {userData.email}
             </p>
-            {/* Add more fields as needed */}
           </div>
         ) : (
           <p>Loading...</p>
