@@ -104,7 +104,7 @@ WSGI_APPLICATION = 'application_db.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'sportsdb'),
+        'NAME': os.getenv('POSTGRES_DB', 'newsdb'),
         'USER': os.getenv('POSTGRES_USER', 'user'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
         'HOST': os.getenv('POSTGRES_HOST', 'db'),
@@ -112,6 +112,7 @@ DATABASES = {
     }
 }
 
+SITE_ID = 1
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logoutUser } from "./Authentication";
 
 const api = axios.create({
   baseURL: "http://localhost:8000/api/", // Replace with your backend URL
@@ -61,10 +62,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-
-export const logoutUser = () => {
-  sessionStorage.removeItem("access_token");
-  sessionStorage.removeItem("refresh_token");
-  // Optionally, clear user-related data from your app’s state
-  window.location.href = "/login"; // Redirect to login page
-};
