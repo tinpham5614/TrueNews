@@ -17,9 +17,9 @@ def fetch_news_from_source():
 
     get_params = {
         'q': 'technology',
-        # 'language': 'en',
-        # 'from': timezone.now().date() - timedelta(days=7),
-        # 'to': timezone.now().date(),
+        'language': 'en',
+        'from': timezone.now().date() - timedelta(days=7),
+        'to': timezone.now().date(),
         # 'sortBy': 'publishedAt',
         'pageSize': 50,
         'apiKey': os.getenv('NEWS_API_KEY', 'Invalid key'),
