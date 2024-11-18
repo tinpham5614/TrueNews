@@ -11,3 +11,4 @@ sqlparse==0.5.1
 channels==4.1.0
 django-allauth
 djangorestframework-simplejwt
+requests
