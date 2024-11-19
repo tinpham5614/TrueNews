@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
     const success = await loginUser(username, password);
     if (success) {
-      window.location.href = "/dashboard"; // Redirect on successful login
+      window.location.href = "/"; // Redirect on successful login
     } else {
       setError("Invalid username or password");
     }

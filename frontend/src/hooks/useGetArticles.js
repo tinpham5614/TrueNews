@@ -6,6 +6,11 @@ export const useGetArticles = () => {
   const [totalResults, setTotalResults] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+  };
   // Fetch articles using async/await
   useEffect(() => {
     fetchArticles();
@@ -20,7 +25,8 @@ export const useGetArticles = () => {
       setTotalResults(totalResults);
       setLoading(false);
     } catch (err) {
-      setError("Failed to fetch articles.");
+      setError("Failed to fetch articles.", err);
+      console.error("Failed to fetch articles.", err);
       setLoading(false);
     }
   };
@@ -42,7 +48,34 @@ export const useGetArticles = () => {
         setError("Article ID is required.");
         return;
       }
-      await api.post(`increment_like_count/${articleId}/`);
+      const article = articles.find((article) => article.id === articleId);
+      if (!article) {
+        setError("Article not found.");
+        return;
+      }
+
+      if (article.userInteraction === "like") {
+        await api.post(`undo_like/${articleId}/`, {
+          headers: headers,
+        });
+
+        article.likeCount -= 1;
+        article.userInteraction = null;
+      } else {
+        if (article.userInteraction === "dislike") {
+          await api.post(`undo_dislike/${articleId}/`, {
+            headers: headers,
+          });
+          article.dislikeCount -= 1;
+        }
+        await api.post(`increment_like/${articleId}/`, {
+          headers: headers,
+        });
+        article.likeCount += 1;
+        article.userInteraction = "like";
+      }
+
+      setArticles([...articles]);
     } catch (err) {
       setError("Failed to like the article.");
       setLoading(false);
@@ -50,12 +83,39 @@ export const useGetArticles = () => {
   };
 
   const handleDislike = async (articleId) => {
-    if (!articleId) {
-      setError("Article ID is required.");
-      return;
-    }
     try {
-      await api.post(`increment_dislike_count/${articleId}/`);
+      if (!articleId) {
+        setError("Article ID is required.");
+        return;
+      }
+      const article = articles.find((article) => article.id === articleId);
+      if (!article) {
+        setError("Article not found.");
+        return;
+      }
+
+      if (article.userInteraction === "dislike") {
+        await api.post(`undo_dislike/${articleId}/`, {
+          headers: headers,
+        });
+
+        article.dislikeCount -= 1;
+        article.userInteraction = null;
+      } else {
+        if (article.userInteraction === "like") {
+          await api.post(`undo_like/${articleId}/`, {
+            headers: headers,
+          });
+          article.likeCount -= 1;
+        }
+        await api.post(`increment_dislike/${articleId}/`, {
+          headers: headers,
+        });
+        article.dislikeCount += 1;
+        article.userInteraction = "dislike";
+      }
+
+      setArticles([...articles]);
     } catch (err) {
       setError("Failed to dislike the article.");
       setLoading(false);
