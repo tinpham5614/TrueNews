@@ -1,14 +1,30 @@
 import React from "react";
-import { useGetNews } from "../hooks/useGetNews";
+import { useGetArticles } from "../hooks/useGetArticles";
 import { ThreeDots } from "react-loader-spinner";
 import ArticleCard from "./ArticleCard";
 
 function Articles() {
-  const { articles, fetchNewArticles, totalResults, loading, error } = useGetNews();
+  const {
+    articles,
+    fetchNewArticles,
+    handleLike,
+    handleDislike,
+    totalResults,
+    loading,
+    error,
+  } = useGetArticles();
 
   const handleFetchNewArticles = () => {
     fetchNewArticles();
-  }
+  };
+
+  const handleLikeClick = (articleId) => {
+    handleLike(articleId);
+  };
+
+  const handleDislikeClick = (articleId) => {
+    handleDislike(articleId);
+  };
 
   return (
     <div>
@@ -31,9 +47,16 @@ function Articles() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-          {articles.map((article, index) => (
-            <ArticleCard key={index} article={article} />
-          ))}
+          {articles.map((article, index) => {
+            return (
+              <ArticleCard
+                key={index}
+                article={article}
+                onLike={() => handleLikeClick(article.id)}
+                onDislike={() => handleDislikeClick(article.id)}
+              />
+            );
+          })}
         </div>
       )}
       {error && <p>{error}</p>}
