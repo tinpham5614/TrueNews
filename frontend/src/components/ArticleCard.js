@@ -10,7 +10,7 @@ function ArticleCard({ article, onLike, onDislike }) {
   const navigateToLogin = () => {
     navigate("/login");
   }
-  
+
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 flex flex-col">
       {/* Article content */}
@@ -96,9 +96,16 @@ function ArticleCard({ article, onLike, onDislike }) {
           )}
         </div>
         <div className="px-6 pt-4 pb-2 ml-auto mt-auto">
-          <span className="text-blue-500 hover:text-blue-700 hover:underline">
-            Read more
-          </span>
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-col h-full"
+          >
+            <span className="text-blue-500 hover:text-blue-700 hover:underline">
+              Read more
+            </span>
+          </a>
         </div>
       </div>
     </div>
