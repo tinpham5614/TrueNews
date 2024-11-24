@@ -2,6 +2,7 @@ import React from "react";
 import { useGetArticles } from "../hooks/useGetArticles";
 import { ThreeDots } from "react-loader-spinner";
 import ArticleCard from "./ArticleCard";
+import {TbRefreshDot} from "react-icons/tb";
 
 function Articles() {
   const {
@@ -38,7 +39,7 @@ function Articles() {
           onClick={handleFetchNewArticles}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
         >
-          Get New Articles
+          <TbRefreshDot />
         </button>
       </div>
       {loading ? (

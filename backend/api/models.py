@@ -17,6 +17,8 @@ class Articles(models.Model):
     content = models.TextField(null=True, blank=True)
     like_count = models.PositiveIntegerField(default=0)
     dislike_count = models.PositiveIntegerField(default=0)
+    sentiment_label = models.CharField(max_length=50, null=True, blank=True)
+    sentiment_score = models.FloatField(null=True, blank=True)
 
     class Meta:
         db_table = 'articles'

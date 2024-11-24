@@ -21,7 +21,7 @@ def fetch_articles_from_source():
         'from': timezone.now().date() - timedelta(days=7),
         'to': timezone.now().date(),
         # 'sortBy': 'publishedAt',
-        'pageSize': 50,
+        'pageSize': 20,
         'apiKey': os.getenv('NEWS_API_KEY', 'Invalid key'),
     }
     

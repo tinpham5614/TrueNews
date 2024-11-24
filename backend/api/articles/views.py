@@ -1,22 +1,38 @@
+from datetime import timedelta
+from django.utils import timezone
 from django.http import JsonResponse
 from .services import fetch_articles_from_source, save_articles_to_db
 from api.models import Articles, UserInteraction
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes, api_view
 import logging
+from transformers import pipeline
 
 logger = logging.getLogger(__name__)
-
+# Initialize the sentiment analysis pipeline
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+model_revision = "714eb0f"
+sentiment_analyzer = pipeline("sentiment-analysis", model=model_name, revision=model_revision)
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def get_articles(request):
     try:
-        articles = Articles.objects.all().order_by('-published_at')
+        # Seven days ago
+        seven_days_ago = timezone.now() - timedelta(days=7)
+        
+        articles = Articles.objects.filter(published_at__gte=seven_days_ago).order_by('-published_at')
         articles_data = []
         for article in articles:
             if not article.url_to_image:
-                article.url_to_image = " https://fakeimg.pl/300x170?text=No+Image "
-            
+                article.url_to_image = " https://fakeimg.pl/300x170?text=No+Image"
+                
+            # Perform sentiment analysis if not already cached
+            if not article.sentiment_label or not article.sentiment_score:
+                sentiment = sentiment_analyzer(article.description[:512])  # Limit to 512 characters for performance
+                article.sentiment_label = sentiment[0]['label']
+                article.sentiment_score = sentiment[0]['score']
+                article.save()
+                
             articles_data.append({
                 "id": article.id,
                 "source": article.source,
@@ -29,6 +45,8 @@ def get_articles(request):
                 "content": article.content,
                 "likeCount": article.like_count,
                 "dislikeCount": article.dislike_count,
+                "sentimentLabel": article.sentiment_label,
+                "sentimentScore": article.sentiment_score,
             })
             if request.user.is_authenticated:
                 user_interaction = UserInteraction.objects.filter(user=request.user, articles=article).first()
@@ -41,7 +59,7 @@ def get_articles(request):
         return JsonResponse({"articles": articles_data, "totalResults": len(articles)}, status=200)
     except Exception as e:
         logger.error(f"Error in get_articles: {e}")
-        return JsonResponse({"error": "An error occurred"}, status=500)
+        return JsonResponse({"error": f"An error occurred {e}"}, status=500)
 
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])

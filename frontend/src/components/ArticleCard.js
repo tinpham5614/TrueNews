@@ -2,14 +2,31 @@ import React from "react";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-
 function ArticleCard({ article, onLike, onDislike }) {
   const isAuthenticated = !!sessionStorage.getItem("access_token");
   const navigate = useNavigate();
 
   const navigateToLogin = () => {
     navigate("/login");
-  }
+  };
+
+  const getSentimentBadge = (sentimentLabel, sentimentScore) => {
+    if (sentimentLabel === "POSITIVE") {
+      return (
+        <span className="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+          Positive: {sentimentScore.toFixed(2) * 100}%
+        </span>
+      );
+    } else if (sentimentLabel === "NEGATIVE") {
+      return (
+        <span className="bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+          Critical: {sentimentScore.toFixed(2) * 100}%
+        </span>
+      );
+    } else {
+      return;
+    }
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 flex flex-col">
@@ -48,6 +65,9 @@ function ArticleCard({ article, onLike, onDislike }) {
         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mt-2">
           {article.source}
         </span>
+
+        {/* Sentiment Badge */}
+        <div className="mt-2">{getSentimentBadge(article.sentimentLabel, article.sentimentScore)}</div>
       </div>
       {/* Like and Display interactions */}
       {isAuthenticated ? (
