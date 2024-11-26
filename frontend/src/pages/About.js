@@ -7,7 +7,7 @@ function About() {
         {/* Left Section: Image or Illustration */}
         <div className="flex justify-center">
           <img
-            src="/news-platform.png"
+            src="/news-platform.svg"
             alt="News Platform Illustration"
             className="rounded-lg shadow-md"
           />
