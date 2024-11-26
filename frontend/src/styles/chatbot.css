@@ -65,8 +65,8 @@
   align-self: flex-end;
 }
 
-.chatbot__message--bot {
-  background-color: #f1f1f1;
+.chatbot__message--system {
+  background-color: #f0f0f0;
   align-self: flex-start;
 }
 

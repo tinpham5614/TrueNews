@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./../styles/chatbot.css";
 import api from "../api";
-import { TbMessage2Bolt } from "react-icons/tb";
+import { TbMessage2Bolt, TbSend } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
+import { ThreeDots } from "react-loader-spinner";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -95,7 +96,7 @@ const Chatbot = () => {
             ))}
             {loading && (
               <div className="chatbot__message chatbot__message--system">
-                Responding...
+                <ThreeDots color="#007bff" height={20} width={20} />
               </div>
             )}
           </div>
@@ -112,7 +113,7 @@ const Chatbot = () => {
               }}
             />
             <button onClick={handleSendMessage} disabled={loading}>
-              Send
+              <TbSend />
             </button>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { useGetArticles } from "../hooks/useGetArticles";
 import { ThreeDots } from "react-loader-spinner";
 import ArticleCard from "./ArticleCard";
-import {TbRefreshDot} from "react-icons/tb";
+import { IoMdRefresh } from "react-icons/io";
 
 function Articles() {
   const {
@@ -28,7 +28,7 @@ function Articles() {
   };
 
   return (
-    <div>
+    <div className="bg-gray-100 py-4 px-2">
       <div className="text-center">
         <p className="text-gray-600">
           {totalResults > 1
@@ -39,12 +39,12 @@ function Articles() {
           onClick={handleFetchNewArticles}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
         >
-          <TbRefreshDot />
+          <IoMdRefresh />
         </button>
       </div>
       {loading ? (
         <div className="flex justify-center items-center">
-          <ThreeDots color="#00BFFF" height={80} width={80} />
+          <ThreeDots color="#007bff" height={50} width={50} />
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">

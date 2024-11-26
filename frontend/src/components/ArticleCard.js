@@ -29,7 +29,7 @@ function ArticleCard({ article, onLike, onDislike }) {
   };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 flex flex-col">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 flex flex-col bg-white">
       {/* Article content */}
       <a
         href={article.url}
