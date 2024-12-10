@@ -3,6 +3,14 @@
 The News Analysis Platform is a web-based application designed to help readers consume news more critically by providing sentiment analysis for articles and allowing user interaction through likes, dislikes, and an AI-powered chatbot. The platform leverages the **News API** to render articles and applies sentiment analysis on article titles to indicate whether the content is positive or critical, empowering users to make informed decisions.
 
 ---
+## Demo
+
+
+https://github.com/user-attachments/assets/99884289-d881-4400-84f5-ef2adcbfaec4
+
+
+
+---
 
 ## Features
 
