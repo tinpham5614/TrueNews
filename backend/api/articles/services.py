@@ -18,11 +18,10 @@ def fetch_articles_from_source():
     get_params = {
         'q': 'technology',
         'language': 'en',
-        'country': 'us',
-        'from': timezone.now().date() - timedelta(days=7),
-        'to': timezone.now().date(),
+        'from': timezone.now().date() - timedelta(days=6),
+        'to': timezone.now().date() + timedelta(days=1),
         'sortBy': 'publishedAt',
-        'pageSize': 50,
+        'pageSize': 20,
         'apiKey': os.getenv('NEWS_API_KEY', 'Invalid key'),
     }
     

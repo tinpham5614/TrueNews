@@ -91,7 +91,12 @@ const Chatbot = () => {
                 key={index}
                 className={`chatbot__message chatbot__message--${message.sender}`}
               >
-                {message.text}
+                {message.text.split("\n").map((text, index) => (
+                  <React.Fragment key={index}>
+                    {text}
+                    <br />
+                  </React.Fragment>
+                ))}
               </div>
             ))}
             {loading && (

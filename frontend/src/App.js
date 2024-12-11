@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import AccountSettings from "./pages/AccountSettings";
@@ -31,7 +32,10 @@ function App() {
         </ul>
         <div className="relative">
           {!isAuthenticated ? (
-            <Link to="/login">Login</Link>
+            <div className="flex space-x-4">
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </div>
           ) : (
             <button
               onClick={toggleDropdown}
@@ -72,6 +76,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/profile"
             element={

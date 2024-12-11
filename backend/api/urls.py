@@ -1,5 +1,5 @@
 from django.urls import path, include
-from api.profile.views import UserViewSet
+from api.profile.views import UserViewSet, register_user
 from api.articles.views import fetch_and_save_articles, get_articles, increment_dislike, increment_like, undo_dislike, undo_like
 from api.chatbot.views import chatbot
 from rest_framework.routers import DefaultRouter
@@ -16,6 +16,7 @@ router.register(r'user', UserViewSet, basename='user')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('register/', register_user, name='register_user'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('get_articles/', get_articles, name='get_articles'),

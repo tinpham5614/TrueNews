@@ -16,9 +16,20 @@ export const loginUser = async (username, password) => {
   }
 };
 
+export const registerUser = async (payload) => {
+  try {
+    const response = await api.post("register/", payload);
+    const registered = response.status === 201;
+    return registered; // Registration success   
+  } catch (error) {
+    console.error("Registration failed", error);
+    return false; // Registration failed
+  }
+};
+
 export const logoutUser = () => {
   sessionStorage.removeItem("access_token");
   sessionStorage.removeItem("refresh_token");
   // Optionally, clear user-related data from your app’s state
-  window.location.href = "/login"; // Redirect to login page
+  window.location.href = "/"; // Redirect to login page
 };
